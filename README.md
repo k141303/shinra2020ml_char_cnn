@@ -1,5 +1,5 @@
 # shinra2020ml_char_cnn
-Character-level CNN for [SHINRA2020ML](character-level CNN) task.  
+Character-level CNN for [SHINRA2020ML](http://shinra-project.info/shinra2020ml/howtoparticipate/?lang=en)(character-level CNN) task.  
 All 30 languages are supported.
 
 ## Requirement
