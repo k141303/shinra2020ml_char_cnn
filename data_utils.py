@@ -156,11 +156,18 @@ def load_shinra_data(args):
     dev_dataset = ShinraDataset(args, part="dev", labels=train_dataset.labels, chars=train_dataset.chars)
     return train_dataset, dev_dataset
 
+def json_dumps(data):
+    return json.dumps(data, ensure_ascii=False)
+
 def save_result(file_path, data):
-    with Pool(multi.cpu_count()) as p:
-        dumps = p.map(json.dumps, data.values())
-    with open(file_path, "w") as f:
-        f.write("\n".join(dumps))
+    flag = False
+    with open(file_path, "w") as f,\
+         Pool(multi.cpu_count()) as p:
+        for dump in p.imap_unordered(json_dumps, data):
+            if flag:
+                dump = "\n" + dump
+            flag = True
+            f.write(dump)
 
 class  ShinraTargetDataset(ShinraDataset):
     def __init__(self, args, labels, chars):
