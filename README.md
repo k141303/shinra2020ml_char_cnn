@@ -9,10 +9,11 @@ All 30 languages are supported.
 
 ## Preprocessing
 
-Please specify the path to the **directory** containing the **training data**, such as `trial_en.zip` or `minimum_en.zip`.
+Please specify the path to the **directory** containing the **training data**, such as `trial_en.zip` or `minimum_en.zip`.  
+(Do not unzip the files.)
 
 ~~~
-$ bash script/run_preprocess.sh /Path/to/train_dir 
+$ bash script/run_preprocess.sh [/Path/to/train_dir]
 ~~~
 
 ## Training
@@ -23,8 +24,9 @@ $ bash script/run_train.sh
 
 ## Get Prediction
 
-Please specify the path to the directory containing the **target data**, such as `minimum_en.zip` or `leaderboard.zip`.
+Please specify the path to the **directory** containing the **target data**, such as `minimum_en.zip` or `leaderboard.zip`.  
+(Do not unzip the files.)
 
 ~~~
-$ bash script/run_predict.sh /Path/to/target_dir
+$ bash script/run_predict.sh [/Path/to/target_dir]
 ~~~
