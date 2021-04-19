@@ -9,7 +9,7 @@ All 30 languages are supported.
 
 ## Preprocessing
 
-Please specify the path to the directory containing the **training data**, such as `trial_en.zip` or `minimum_en.zip`.
+Please specify the path to the **directory** containing the **training data**, such as `trial_en.zip` or `minimum_en.zip`.
 
 ~~~
 $ bash script/run_preprocess.sh /Path/to/train_dir 
