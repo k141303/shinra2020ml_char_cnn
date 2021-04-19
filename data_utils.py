@@ -100,15 +100,20 @@ class ShinraDataset(Dataset):
     def _decode(self, results):
         decoded = {}
         for pageid, result in results:
-            d = {"pageid":pageid, "title":self.pageid2title[pageid], "lang":self.lang, "ENEs":[]}
+            try:
+                d = {"pageid":int(pageid), "ENEs":[]}
+            except ValueError:
+                import warnings
+                warnings.warn(f"Pageid:{pageid} is str.")
+                continue
             flags = [(idx, prob) for idx, prob in enumerate(result) if prob >= 0.5]
             if len(flags) == 0:
                 max_prob = max(result)
                 idx = result.index(max_prob)
-                d["ENEs"].append({"ENE_id":self.idx2label[idx], "prob":max_prob})
+                d["ENEs"].append({"ENE_id":self.idx2label[idx]})
             else:
                 for idx, prob in flags:
-                    d["ENEs"].append({"ENE_id":self.idx2label[idx], "prob":prob})
+                    d["ENEs"].append({"ENE_id":self.idx2label[idx]})
             decoded[pageid] = d
         return decoded
 
@@ -159,11 +164,22 @@ def load_shinra_data(args):
 def json_dumps(data):
     return json.dumps(data, ensure_ascii=False)
 
+"""
 def save_result(file_path, data):
     flag = False
     with open(file_path, "w") as f,\
          Pool(multi.cpu_count()) as p:
         for dump in p.imap_unordered(json_dumps, data):
+            if flag:
+                dump = "\n" + dump
+            flag = True
+            f.write(dump)
+"""
+
+def save_result(file_path, data):
+    flag = False
+    with open(file_path, "w") as f:
+        for dump in map(json_dumps, data.values()):
             if flag:
                 dump = "\n" + dump
             flag = True
